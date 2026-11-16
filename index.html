@@ -140,6 +140,10 @@ form.in .subbtn{background:var(--ink);color:var(--bg)}
 .how{font-size:13px;color:var(--muted)}
 .how summary{cursor:pointer;font-weight:700;padding:4px 0}
 .how .rules{color:var(--ink);margin-top:6px}
+.field.name{font-weight:700}
+.field.name input{border:1.5px solid var(--ink);font-size:18px;padding:10px 12px}
+.field.name input.need{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 30%,transparent)}
+.namehint{margin:-10px 0 0;font-size:13px;font-weight:700;color:var(--accent)}
 </style>
 
 
@@ -167,8 +171,9 @@ form.in .subbtn{background:var(--ink);color:var(--bg)}
     <div class="logo" aria-label="もじわけ"><span>も</span><span>じ</span><i aria-hidden="true"></i><span>わ</span><span>け</span></div>
     <p class="lead">線を1本。字をちょうど半分に。</p>
     <div class="hero"><img class="l" src="scene.png" alt="字を線で2つに分けた場面" width="720" height="720"><img class="d" src="scene-dark.png" alt="" width="720" height="720"></div>
+    <label class="field name">名前 <input id="name" type="text" maxlength="10" placeholder="ここに名前を入れる"></label>
+    <p class="namehint" id="nameHint" hidden>名前を入れるとランキングに載ります。入れずに遊ぶときは、もう一度押してください。</p>
     <div class="modes" id="modes"></div>
-    <label class="field">名前 <input id="name" type="text" maxlength="10" placeholder="ななし"></label>
     <details class="how"><summary>あそびかた</summary>
     <ol class="rules">
       <li>字の上を指で<b>なぞって線を1本</b>引く。線は端までのびて、字を2つに分ける。</li>
@@ -471,7 +476,8 @@ function renderModes(){const box=$('modes');box.textContent='';
     mine&&mine.done?'今日の記録 合計 '+pct(total(mine.cuts))+'%・結果を見る':mine&&mine.cuts.length?'つづきから（'+(mine.cuts.length+1)+'字目）':'1日1回。全国で同じ5字に挑戦',()=>start('daily'));
   mk('mode-prac',' wide','れんしゅう','好きな字も切れる','何度でも。記録なし',()=>start('prac'));
 }
-function start(mode){audio();store.set('mojiwake_name',$('name').value);
+function start(mode){if(mode==='daily'&&!$('title').hidden&&!$('name').value.trim()&&!start.asked){start.asked=true;$('nameHint').hidden=false;const n=$('name');n.classList.add('need');n.focus();return;}
+  $('nameHint').hidden=true;$('name').classList.remove('need');audio();store.set('mojiwake_name',$('name').value);
   $('title').hidden=true;$('result').hidden=true;$('txt').value='';
   if(mode==='daily'){const day=jstDay(0),chars=charsOf(day),sv=store.get('mojiwake_daily',{});
     const cuts=sv.day===day&&Array.isArray(sv.cuts)?sv.cuts.slice(0,chars.length):[];
