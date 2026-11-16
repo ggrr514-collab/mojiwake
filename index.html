@@ -131,6 +131,15 @@ form.in .subbtn{background:var(--ink);color:var(--bg)}
 .thumb{display:flex;flex-direction:column;align-items:center;gap:2px;background:var(--paper);border:1px solid var(--grid);border-radius:4px;padding:4px 0;min-width:0;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
 .thumb canvas{max-width:100%;height:auto!important;aspect-ratio:1}
 .thumb .good{color:var(--good)} .thumb .bad{color:var(--accent)}
+.hero{border:1.5px solid var(--grid);border-radius:6px;overflow:hidden;background:var(--paper)}
+.hero img{display:block;width:100%;height:auto}
+.hero .d{display:none}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .hero .l{display:none}:root:not([data-theme="light"]) .hero .d{display:block}}
+:root[data-theme="dark"] .hero .l{display:none}
+:root[data-theme="dark"] .hero .d{display:block}
+.how{font-size:13px;color:var(--muted)}
+.how summary{cursor:pointer;font-weight:700;padding:4px 0}
+.how .rules{color:var(--ink);margin-top:6px}
 </style>
 
 
@@ -156,8 +165,11 @@ form.in .subbtn{background:var(--ink);color:var(--bg)}
 <section class="overlay" id="title">
   <div class="sheet">
     <div class="logo" aria-label="もじわけ"><span>も</span><span>じ</span><i aria-hidden="true"></i><span>わ</span><span>け</span></div>
-    <p class="lead">線を1本。字の黒いところを、ちょうど半分に分けられるか。</p>
+    <p class="lead">線を1本。字をちょうど半分に。</p>
+    <div class="hero"><img class="l" src="scene.png" alt="字を線で2つに分けた場面" width="720" height="720"><img class="d" src="scene-dark.png" alt="" width="720" height="720"></div>
     <div class="modes" id="modes"></div>
+    <label class="field">名前 <input id="name" type="text" maxlength="10" placeholder="ななし"></label>
+    <details class="how"><summary>あそびかた</summary>
     <ol class="rules">
       <li>字の上を指で<b>なぞって線を1本</b>引く。線は端までのびて、字を2つに分ける。</li>
       <li>黒いところが<b>50%ずつ</b>に近いほどいい。ずれが点数になる。</li>
@@ -165,7 +177,7 @@ form.in .subbtn{background:var(--ink);color:var(--bg)}
       <li>5字のずれの合計が小さい人が上位。線はたてでも斜めでもいい。</li>
     </ol>
     <p class="note">黒いところの広さは、太いゴシック体（Noto Sans JP Black）の字を縦横64マスに区切って数えています。</p>
-    <label class="field">名前 <input id="name" type="text" maxlength="10" placeholder="ななし"></label>
+    </details>
     <div class="rank-panel" id="tPanel"></div>
     <p class="hub" style="font-size:13px;margin:0"><a href="https://ggrr514-collab.github.io/moji/" style="color:inherit;font-weight:700">← もじあそび（ほかのゲームへ）</a></p>
   </div>
